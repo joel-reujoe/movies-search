@@ -1,11 +1,11 @@
 import { Layout, Menu } from 'antd';
 import MoviesCards from './MovieCards';
-import movies from '../movies';
 import { Row } from 'antd';
 import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Fuse from "fuse.js";
 import { Dropdown, Button,Select } from 'antd';
+import getMovieList from '../Utitilities/Utitlites';
 
 
 const { Header, Content } = Layout;
@@ -27,28 +27,35 @@ class HomePageComponent extends React.Component{
       sortOrder:"default",
       filterByLanguage:"default",
       filterByLocation:"default",
-      currentData:[...movies.movies],
+      currentData:[],
       sortText:"Sort",
       filterByLanguageText:"Filter By Language",
       filterByLocationText:"Filter By Location",
-      fuse:new Fuse(movies.movies, {keys: ["Title"],})
+      fuse:{},
+      originalData:[]
     }
   }
 
-  
+    async componentDidMount()
+    {
+      let data = await getMovieList();
+      this.setState({
+        originalData:data,
+        currentData:data,
+        fuse: new Fuse(data, {keys: ["Title"],})
+      })
+    }
    
     getFilterByLangauge(filterByLanguage){
-      let data = [...movies.movies];
-      console.log(filterByLanguage)
       if(filterByLanguage==="default")
       {
         this.setState({
-          currentData:[...movies.movies],
+          currentData:[...this.state.originalData],
           filterByLanguageText:"Filter By Language"
         })
         return;
       }
-      data = data.filter((item)=>{
+      let data = this.state.originalData.filter((item)=>{
         return item.Language===filterByLanguage
       })
       this.setState({
@@ -58,11 +65,11 @@ class HomePageComponent extends React.Component{
     }
 
     getFilterByLocation(filterByLocation){
-      let data = [...movies.movies];
+      let data = [...this.state.originalData];
       if(filterByLocation==="default")
       {
         this.setState({
-          currentData:[...movies.movies],
+          currentData:[...this.state.originalData],
           filterByLocationText:"Filter by Location"
         })
         return;
@@ -103,7 +110,7 @@ class HomePageComponent extends React.Component{
       if(sortOrder === "default")
       {
         this.setState({
-          currentData:[...movies.movies],
+          currentData:[...this.state.originalData],
           sortText:"Sort"
         })
       }
@@ -146,7 +153,7 @@ class HomePageComponent extends React.Component{
         })
       }else{
         this.setState({
-          currentData:[...movies.movies]
+          currentData:[...this.state.originalData]
         })
       }
     }
@@ -181,13 +188,13 @@ class HomePageComponent extends React.Component{
       
 
   
-      movies.movies.map(item=>{
+      this.state.originalData.map(item=>{
         if(!languages.includes(item.Language)){
         languages.push(item.Language)
         }
       })
 
-      movies.movies.map(item=>{
+      this.state.originalData.map(item=>{
         if(!location.includes(item.Location)){
         location.push(item.Location)
         }

@@ -16,7 +16,7 @@ export default function Routes()
                 <Route exact path="/">
                     <HomePageComponent />
                 </Route>
-                <Route path="/details/:id" children={<DetailsPageComponent />}>
+                <Route path="/details/:id" component={DetailsPageComponent}>
                     
                 </Route>
             </Switch>

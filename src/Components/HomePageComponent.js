@@ -270,7 +270,7 @@ class HomePageComponent extends React.Component{
             >
                 <Row gutter={[16, 16]}>
                 {this.state.currentData.map((objectItem)=>(
-                    <a style={{marginBottom:"10px",marginLeft:"20px"}}>
+                    <a style={{marginBottom:"10px",marginLeft:"20px"}} href={`details/${objectItem.imdbID}`}>
                     <MoviesCards poster={objectItem.Poster} title={objectItem.Title} ratings={objectItem.imdbRating} language={objectItem.Language} location={objectItem.Location}/>
                     </a>
                 ))}

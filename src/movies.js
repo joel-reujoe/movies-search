@@ -91,7 +91,7 @@ let movies = {
                 "https://m.media-amazon.com/images/M/MV5BMTkyMjQ4ODk1NF5BMl5BanBnXkFtZTcwMjcxMTk2Mw@@._V1_UX100_CR0,0,100,100_AL_.jpg"
             ],
             "Title": "The Dark Knight",
-            "imdbID": "tt1201607",
+            "imdbID": "tt1201609",
             "listingType": "NOW_SHOWING",
             "imdbRating": "8.1"
         },
